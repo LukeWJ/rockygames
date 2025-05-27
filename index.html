@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儿童英语射击游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- 游戏标题 -->
+        <div id="gameTitle">
+            <h1>🎯 Rocky射击大冒险 🎯</h1>
+        </div>
+
+        <!-- 游戏设置界面 -->
+        <div id="setupScreen" class="screen">
+            <h2>选择你的目标物品</h2>
+            <div id="itemSelection">
+                <div class="item-category">
+                    <h3>🌈 彩色云朵</h3>
+                    <div class="item-grid">
+                        <button class="item-btn" data-type="cloud" data-color="red" data-name="red cloud">🔴 红云</button>
+                        <button class="item-btn" data-type="cloud" data-color="green" data-name="green cloud">🟢 绿云</button>
+                        <button class="item-btn" data-type="cloud" data-color="blue" data-name="blue cloud">🔵 蓝云</button>
+                        <button class="item-btn" data-type="cloud" data-color="purple" data-name="purple cloud">🟣 紫云</button>
+                        <button class="item-btn" data-type="cloud" data-color="yellow" data-name="yellow cloud">🟡 黄云</button>
+                        <button class="item-btn" data-type="cloud" data-color="orange" data-name="orange cloud">🟠 橙云</button>
+                    </div>
+                </div>
+                <div class="item-category">
+                    <h3>🐾 十二生肖</h3>
+                    <div class="item-grid">
+                        <button class="item-btn" data-type="zodiac" data-name="rat">🐭 鼠</button>
+                        <button class="item-btn" data-type="zodiac" data-name="ox">🐂 牛</button>
+                        <button class="item-btn" data-type="zodiac" data-name="tiger">🐅 虎</button>
+                        <button class="item-btn" data-type="zodiac" data-name="rabbit">🐰 兔</button>
+                        <button class="item-btn" data-type="zodiac" data-name="dragon">🐲 龙</button>
+                        <button class="item-btn" data-type="zodiac" data-name="snake">🐍 蛇</button>
+                        <button class="item-btn" data-type="zodiac" data-name="horse">🐴 马</button>
+                        <button class="item-btn" data-type="zodiac" data-name="goat">🐐 羊</button>
+                        <button class="item-btn" data-type="zodiac" data-name="monkey">🐵 猴</button>
+                        <button class="item-btn" data-type="zodiac" data-name="rooster">🐓 鸡</button>
+                        <button class="item-btn" data-type="zodiac" data-name="dog">🐕 狗</button>
+                        <button class="item-btn" data-type="zodiac" data-name="pig">🐷 猪</button>
+                    </div>
+                </div>
+            </div>
+            <div id="selectedItems">
+                <h3>已选择的目标：</h3>
+                <div id="selectedList"></div>
+            </div>
+            <div id="bombSelection">
+                <h3>💣 炸弹数量：</h3>
+                <div class="bomb-control">
+                    <button id="decreaseBomb" class="bomb-btn">-</button>
+                    <span id="bombCount">2</span>
+                    <button id="increaseBomb" class="bomb-btn">+</button>
+                </div>
+            </div>
+            <button id="startGame" class="big-btn">🚀 开始游戏</button>
+        </div>
+
+        <!-- 游戏主界面 -->
+        <div id="gameScreen" class="screen hidden">
+            <!-- 游戏信息栏 -->
+            <div id="gameInfo">
+                <div class="info-item">
+                    <span>⭕ 圆圈: </span>
+                    <span id="circleCount">10</span>
+                </div>
+                <div class="info-item">
+                    <span>⏰ 时间: </span>
+                    <span id="timeLeft">60</span>s
+                </div>
+                <div class="info-item">
+                    <span>🎯 得分: </span>
+                    <span id="score">0</span>
+                </div>
+            </div>
+
+            <!-- 游戏画布 -->
+            <canvas id="gameCanvas" width="800" height="500"></canvas>
+
+            <!-- 控制区域 -->
+            <div id="controls">
+                <div id="aimControl">
+                    <input type="range" id="aimSlider" min="0" max="360" value="270">
+                    <span id="aimAngle">270°</span>                    
+                </div>
+                <button id="shootBtn" class="big-btn">🔥 发射</button>
+            </div>
+            
+            <!-- 游戏提示 -->
+            <div id="gameHints">
+                <div class="hint-item">🎯 空格发射炮弹射击目标</div>
+                <div class="hint-item">↔️ 左右按键可以发射调整角度</div>
+                <div class="hint-item">🔍 命中目标会有奖励,命中炸弹清零得分</div>
+            </div>
+
+            <!-- 命中物品显示区 -->
+            <div id="hitItems">
+                <h3>🏆 已命中:</h3>
+                <div id="hitList"></div>
+            </div>
+        </div>
+
+        <!-- 游戏结束界面 -->
+        <div id="endScreen" class="screen hidden">
+            <h2>🎉 游戏结束 🎉</h2>
+            <div id="finalStats">
+                <div class="stat-item">
+                    <span class="stat-label">最终得分:</span>
+                    <span id="finalScore" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">命中目标:</span>
+                    <span id="finalHits" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">准确率:</span>
+                    <span id="accuracy" class="stat-value">0%</span>
+                </div>
+            </div>
+            <div id="achievements">
+                <h3>🏅 成就</h3>
+                <div id="achievementList"></div>
+            </div>
+            <button id="playAgain" class="big-btn">🔄 再玩一次</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
