@@ -369,7 +369,6 @@ function setupEventListeners() {
     const aimSlider = document.getElementById('aimSlider');
     aimSlider.addEventListener('input', (e) => {
         gameState.currentAimAngle = parseInt(e.target.value);
-        document.getElementById('aimAngle').textContent = gameState.currentAimAngle + '°';
     });
 
     // 再玩一次按钮
@@ -678,7 +677,6 @@ function adjustAim(delta) {
         gameState.currentAimAngle += 360;
     }
     document.getElementById('aimSlider').value = gameState.currentAimAngle;
-    document.getElementById('aimAngle').textContent = gameState.currentAimAngle + '°';
 }
 
 // 射击
@@ -894,7 +892,6 @@ function updateUI() {
     
     // 更新瞄准角度显示
     document.getElementById('aimSlider').value = gameState.currentAimAngle;
-    document.getElementById('aimAngle').textContent = gameState.currentAimAngle + '°';
     
     // 更新射击按钮状态
     const shootBtn = document.getElementById('shootBtn');
